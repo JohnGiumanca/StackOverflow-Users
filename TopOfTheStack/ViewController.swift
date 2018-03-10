@@ -9,10 +9,12 @@
 import UIKit
 import Alamofire
 
+var userArray:NSArray = []
+var myIndex = 0
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let elements = ["horse", "cat", "dog", "potato","horse", "cat", "dog", "potato","horse", "cat", "dog", "potato"]
-    var userArray:NSArray = []
+    
     let myGroup = DispatchGroup()
     
     
@@ -32,7 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             if let usersJSON = response.result.value{
                 if let itemsObject:Dictionary = usersJSON as? Dictionary<String,Any>{
-                    self.userArray = itemsObject["items"] as! NSArray
+                    userArray = itemsObject["items"] as! NSArray
                     self.myGroup.leave()
                 }
             }
@@ -58,13 +60,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.imageUser.layer.cornerRadius = cell.imageUser.frame.height / 2
         
         self.myGroup.notify(queue: .main){
-            var userAttributes:Dictionary = self.userArray[indexPath.row] as! Dictionary<String,Any>
+            var userAttributes:Dictionary = userArray[indexPath.row] as! Dictionary<String,Any>
             cell.labelUser.text = (userAttributes["display_name"] as! String)
             
             let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
             let session = URLSession(configuration: .default)
             let getImageFromUrl = session.dataTask(with: profileImageURL!) { (data, response, error) in
-
                 if let e = error {
                     print("Error Occurred: \(e)")
                 }
@@ -88,6 +89,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "segue", sender: self)
+        myIndex = indexPath.row
     }
     
     

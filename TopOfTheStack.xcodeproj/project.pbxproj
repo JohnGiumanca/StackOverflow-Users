@@ -14,6 +14,7 @@
 		866D3A932053127A003160E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 866D3A922053127A003160E2 /* Assets.xcassets */; };
 		866D3A962053127A003160E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 866D3A942053127A003160E2 /* LaunchScreen.storyboard */; };
 		866D3A9E205314A7003160E2 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D3A9D205314A7003160E2 /* CustomTableViewCell.swift */; };
+		866D3AA020545EE5003160E2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D3A9F20545EE5003160E2 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		866D3A952053127A003160E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		866D3A972053127A003160E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		866D3A9D205314A7003160E2 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		866D3A9F20545EE5003160E2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				866D3A8B2053127A003160E2 /* AppDelegate.swift */,
 				866D3A8D2053127A003160E2 /* ViewController.swift */,
+				866D3A9F20545EE5003160E2 /* InfoViewController.swift */,
 				866D3A8F2053127A003160E2 /* Main.storyboard */,
 				866D3A922053127A003160E2 /* Assets.xcassets */,
 				866D3A942053127A003160E2 /* LaunchScreen.storyboard */,
@@ -222,6 +225,7 @@
 			files = (
 				866D3A9E205314A7003160E2 /* CustomTableViewCell.swift in Sources */,
 				866D3A8E2053127A003160E2 /* ViewController.swift in Sources */,
+				866D3AA020545EE5003160E2 /* InfoViewController.swift in Sources */,
 				866D3A8C2053127A003160E2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
