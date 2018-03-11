@@ -30,6 +30,7 @@
 		866D3A972053127A003160E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		866D3A9D205314A7003160E2 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		866D3A9F20545EE5003160E2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		866D3AA22055B6FF003160E2 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +90,7 @@
 		A5386227964EDBDD6ACA0FC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				866D3AA22055B6FF003160E2 /* Kingfisher.framework */,
 				3F0518E75366E8F764F5EB58 /* Pods_TopOfTheStack.framework */,
 			);
 			name = Frameworks;
@@ -206,10 +208,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TopOfTheStack/Pods-TopOfTheStack-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

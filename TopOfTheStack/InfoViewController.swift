@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 
 class InfoViewController: UIViewController {
@@ -22,13 +23,7 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        goldBadges.layer.masksToBounds = true
-        goldBadges.layer.cornerRadius = goldBadges.frame.height / 2
-        silverBadges.layer.masksToBounds = true
-        silverBadges.layer.cornerRadius = goldBadges.frame.height / 2
-        bronzeBadges.layer.masksToBounds = true
-        bronzeBadges.layer.cornerRadius = goldBadges.frame.height / 2
-        
+        roundCorners()
 
         var userAttributes:Dictionary = userArray[myIndex] as! Dictionary<String,Any>
         nameUser.text = (userAttributes["display_name"] as! String)
@@ -40,31 +35,19 @@ class InfoViewController: UIViewController {
         bronzeBadges.text = "\(userBadges["bronze"]!)"
         
         let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
-        let session = URLSession(configuration: .default)
-        let getImageFromUrl = session.dataTask(with: profileImageURL!) { (data, response, error) in
-            if let e = error {
-                print("Error Occurred: \(e)")
-            }
-            else {
-                if (response as? HTTPURLResponse) != nil {
-                    if let imageData = data {
-                        let image = UIImage(data: imageData)
-                        self.imageUser.image = image
-                    }
-                    else {
-                        print("Image file is currupted")
-                    }
-                    
-                }
-                else {
-                    print("No response from server")
-                }
-            }
-        }
-        getImageFromUrl.resume()
+        let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: nameUser.text)
+        imageUser.kf.setImage(with:resource)
         
         
-        
+    }
+    
+    public func roundCorners(){
+        goldBadges.layer.masksToBounds = true
+        goldBadges.layer.cornerRadius = goldBadges.frame.height / 2
+        silverBadges.layer.masksToBounds = true
+        silverBadges.layer.cornerRadius = goldBadges.frame.height / 2
+        bronzeBadges.layer.masksToBounds = true
+        bronzeBadges.layer.cornerRadius = goldBadges.frame.height / 2
         
     }
 

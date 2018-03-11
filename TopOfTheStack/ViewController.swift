@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Kingfisher
 
 var userArray:NSArray = []
 var myIndex = 0
@@ -16,17 +17,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     let myGroup = DispatchGroup()
-    
-    
     @IBOutlet weak var tableView: UITableView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         
         self.myGroup.enter()
         Alamofire.request("https://api.stackexchange.com/2.2/users?order=desc&sort=reputation&site=stackoverflow").responseJSON{ response in
@@ -38,11 +35,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.myGroup.leave()
                 }
             }
-            
         }
-        
-       
-        
         
     }
 
@@ -64,28 +57,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.labelUser.text = (userAttributes["display_name"] as! String)
             
             let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
-            let session = URLSession(configuration: .default)
-            let getImageFromUrl = session.dataTask(with: profileImageURL!) { (data, response, error) in
-                if let e = error {
-                    print("Error Occurred: \(e)")
-                }
-                else {
-                    if (response as? HTTPURLResponse) != nil {
-                        if let imageData = data {
-                            let image = UIImage(data: imageData)
-                            cell.imageUser.image = image
-                        }
-                        else {
-                            print("Image file is currupted")
-                        }
-                        
-                    }
-                    else {
-                        print("No response from server")
-                    }
-                }
-            }
-            getImageFromUrl.resume()
+            let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: cell.labelUser.text)
+            cell.imageUser.kf.setImage(with:resource)
+           
         }
         
         return cell
