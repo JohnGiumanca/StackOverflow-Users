@@ -12,6 +12,8 @@ import Kingfisher
 
 class InfoViewController: UIViewController {
 
+    var userArray = [[String:Any]]()
+    var myIndex = Int()
     
     @IBOutlet weak var imageUser: UIImageView!
     @IBOutlet weak var nameUser: UILabel!
@@ -24,19 +26,33 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
         
         roundCorners()
-
-        var userAttributes:Dictionary = userArray[myIndex] as! Dictionary<String,Any>
-        nameUser.text = (userAttributes["display_name"] as! String)
-        locationUser.text = (userAttributes["location"] as! String)
         
-        var userBadges:Dictionary = userAttributes["badge_counts"] as! Dictionary<String,Any>
-        goldBadges.text = "\(userBadges["gold"]!)"
-        silverBadges.text = "\(userBadges["silver"]!)"
-        bronzeBadges.text = "\(userBadges["bronze"]!)"
+        guard let userAttributes:Dictionary = userArray[myIndex] as Dictionary<String,Any>
+            else { print("error")}
+        if(userAttributes["display_name"] != nil){
+            nameUser.text = (userAttributes["display_name"] as! String)
+        }
+        if(userAttributes["location"] != nil){
+            locationUser.text = (userAttributes["location"] as! String)
+        }
         
-        let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
-        let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: nameUser.text)
-        imageUser.kf.setImage(with:resource)
+        guard let userBadges:Dictionary = userAttributes["badge_counts"] as! Dictionary<String,Any>
+            else { print("error")}
+        if userBadges["gold"] != nil{
+            goldBadges.text = "\(userBadges["gold"]!)"
+        }
+        if userBadges["silver"] != nil{
+            silverBadges.text = "\(userBadges["silver"]!)"
+        }
+        if userBadges["bronze"] != nil{
+            bronzeBadges.text = "\(userBadges["bronze"]!)"
+        }
+        
+        if userAttributes["profile_image"] != nil {
+            let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
+            let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: nameUser.text)
+            imageUser.kf.setImage(with:resource)
+        }
         
         
     }

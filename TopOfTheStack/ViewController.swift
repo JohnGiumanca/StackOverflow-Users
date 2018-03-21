@@ -10,13 +10,14 @@ import UIKit
 import Alamofire
 import Kingfisher
 
-var userArray:NSArray = []
-var myIndex = 0
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var userArray = [[String:Any]]()
+    var myIndex = Int()
+    let maxUsers = 10
     
-    let myGroup = DispatchGroup()
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -25,14 +26,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
-        self.myGroup.enter()
-        Alamofire.request("https://api.stackexchange.com/2.2/users?order=desc&sort=reputation&site=stackoverflow").responseJSON{ response in
+        let url = URL(string: "https://api.stackexchange.com/2.2/users?order=desc&sort=reputation&site=stackoverflow")
+        Alamofire.request(url!).responseJSON{ response in
             // print(response)
             
             if let usersJSON = response.result.value{
                 if let itemsObject:Dictionary = usersJSON as? Dictionary<String,Any>{
-                    userArray = itemsObject["items"] as! NSArray
-                    self.myGroup.leave()
+                    var allUsers:[[String:Any]] = itemsObject["items"] as! Array
+                    self.userArray = Array(allUsers[0...(self.maxUsers-1)])
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -40,7 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 10;
+        return userArray.count;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -52,15 +54,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.cellView.layer.cornerRadius = cell.cellView.frame.height / 2
         cell.imageUser.layer.cornerRadius = cell.imageUser.frame.height / 2
         
-        self.myGroup.notify(queue: .main){
-            var userAttributes:Dictionary = userArray[indexPath.row] as! Dictionary<String,Any>
-            cell.labelUser.text = (userAttributes["display_name"] as! String)
-            
-            let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
-            let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: cell.labelUser.text)
-            cell.imageUser.kf.setImage(with:resource)
-           
-        }
+    
+        var userAttributes:Dictionary = userArray[indexPath.row]
+        cell.labelUser.text = (userAttributes["display_name"] as! String)
+        
+        let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
+        let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: cell.labelUser.text)
+        cell.imageUser.kf.setImage(with:resource)
         
         return cell
     }
@@ -68,6 +68,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "segue", sender: self)
         myIndex = indexPath.row
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let infoView = segue.destination as! InfoViewController
+        infoView.userArray = self.userArray
+        infoView.myIndex = self.myIndex
     }
     
     
