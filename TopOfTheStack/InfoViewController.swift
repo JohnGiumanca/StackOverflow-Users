@@ -12,8 +12,7 @@ import Kingfisher
 
 class InfoViewController: UIViewController {
 
-    var userArray = [[String:Any]]()
-    var myIndex = Int()
+    var userAttributes = Dictionary<String,Any>()
     
     @IBOutlet weak var imageUser: UIImageView!
     @IBOutlet weak var nameUser: UILabel!
@@ -27,8 +26,7 @@ class InfoViewController: UIViewController {
         
         roundCorners()
         
-        guard let userAttributes:Dictionary = userArray[myIndex] as Dictionary<String,Any>
-            else { print("error")}
+        
         if(userAttributes["display_name"] != nil){
             nameUser.text = (userAttributes["display_name"] as! String)
         }
@@ -36,22 +34,27 @@ class InfoViewController: UIViewController {
             locationUser.text = (userAttributes["location"] as! String)
         }
         
-        guard let userBadges:Dictionary = userAttributes["badge_counts"] as! Dictionary<String,Any>
-            else { print("error")}
+        let userBadges:Dictionary = userAttributes["badge_counts"] as! Dictionary<String,Any>
         if userBadges["gold"] != nil{
             goldBadges.text = "\(userBadges["gold"]!)"
         }
+        else { print("error")}
+        
         if userBadges["silver"] != nil{
             silverBadges.text = "\(userBadges["silver"]!)"
         }
+        else { print("error")}
+        
         if userBadges["bronze"] != nil{
             bronzeBadges.text = "\(userBadges["bronze"]!)"
         }
+        else { print("error")}
         
         if userAttributes["profile_image"] != nil {
             let profileImageURL = URL(string: (userAttributes["profile_image"] as! String) )
             let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: nameUser.text)
             imageUser.kf.setImage(with:resource)
+            
         }
         
         

@@ -23,6 +23,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ImageCache.default.maxCachePeriodInSecond = 30 * 60  // save on disk for 30min
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -62,19 +64,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let resource = ImageResource(downloadURL: profileImageURL!, cacheKey: cell.labelUser.text)
         cell.imageUser.kf.setImage(with:resource)
         
+        
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "segue", sender: self)
         myIndex = indexPath.row
+        performSegue(withIdentifier: "segue", sender: self)
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let infoView = segue.destination as! InfoViewController
-        infoView.userArray = self.userArray
-        infoView.myIndex = self.myIndex
+        infoView.userAttributes = self.userArray[self.myIndex]
+        // we transfer our user info with segue to InfoViewController
     }
+    
+
     
     
 
