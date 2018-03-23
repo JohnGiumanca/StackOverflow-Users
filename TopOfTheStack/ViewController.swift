@@ -23,8 +23,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ImageCache.default.maxCachePeriodInSecond = 30 * 60  // save on disk for 30min
-        
+        ImageCache.default.maxCachePeriodInSecond = 30 * 60     // save on disk for 30min
+                                                                // the ram will automatically when need
         tableView.delegate = self
         tableView.dataSource = self
         
