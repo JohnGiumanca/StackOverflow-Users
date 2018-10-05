@@ -16,7 +16,7 @@ Pod installation complete! There are 2 dependencies from the Podfile and 2 total
 ```
 Open *TopOfTheStack.xcworkspace*, Build and Run and thats it.
 
-##Presentation 
+## Presentation 
 <p align="center">
 <img src="https://i.imgur.com/fl1jgbA.jpg" width="390" height="700" style="float: right;">
 <img src="https://i.imgur.com/2bmIy93.jpg" width="390" height="700" style="float: right;">
